@@ -122,8 +122,59 @@ IMPORTANT NOTE: You should never run demanding commands from the login node, reg
 The CHPC has multiple clusters for high performance computing. These can all be seen on the [CHPC website](https://chpc.utah.edu/documentation/gettingstarted.php) in the "Accessing the HPC Systems" section. If you ever have questions about using the CHPC, use the link above for accessing the CHPC documentation. We only have access to the general clusters (not the protected environment), but you can log into any of these using your UNID.
 
 
+# <a name="creating-a-batch-script"></a>
+## Creating a Batch Script 
 
+As stated above, when you login to a CHPC cluster, you land at the login node for that cluster. On this node, you should never run programs that are computationally intensive (i.e., require lots of power or long run times). However, you might be asking yourself, "They why the heck are we using the supercomputer if we can't run big jobs? That doesn't sound very super!" Computationally intensive jobs will be submitted from your login node to a compute node. The software on the CHPC that enables these submissions is called 'slurm'.
 
+Slurm is a workload manager used for job submission on HPC clusters so that multiple people can access compute nodes for their high-intensity computing needs.
+
+Move to the ```LonePeakLearner``` directory you created earlier
+
+```
+cd ~/BIOL_4310
+```
+
+You should have a bash script here called 'LonePeakLearner.sh' that appends 'hello world\n' to a an output file. You can run this script on a compute node by converting your simple script to a batch script as described below (For more detailed instructions, see the [CHPC doc page](https://chpc.utah.edu/documentation/software/slurm.php#submit)
+
+To make your batch script, create a new bash script called ```q.SlurmNewbie.sh``` and add the following lines to the top of the file:
+
+```
+#!/bin/sh
+#SBATCH --account=utu
+#SBATCH --partition=lonepeak
+#SBATCH --nodes=1
+#SBATCH --mem=1
+#SBATCH --ntasks=1
+#SBATCH -o slurm-%j.out-%N
+#SBATCH -e slurm-%j.err-%N
+
+cd ~/LonePeakLearner
+bash LonePeakLearner.sh
+```
+
+Every line that begins with ```#SBATCH``` is an option that will be interpreted by slurm. Any line that starts with ```#``` and is not imediately followed with ```BATCH``` will simply be interpreted as a comment.
+
+To see the values you can include for ```account``` and ```partition```, enter the following command while on the cluster:
+
+```
+myallocation
+```
+
+- The account is the group name you are a part of (it is NOT your UNID). For those in the advanced bioinformatics class, it is ```utu-biol4310```. For those in the research lab who are linked to the CHPC, it is ```utu```.
+
+- The partition is the cluster containing the compute node(s) you will run the job on.
+
+The ```--nodes``` (```-N```) option specifies the number of nodes you are requesting. You can think of a node as a single computer. When we refer to the supercomputer as "the cluster", we are referring to the "cluster" of nodes that are used. In other words, the collection of interconnected computers that can be accessed for computing tasks. For computationally intensive jobs, you may want to use multiple nodes. The login node is essentially a node with low memory dedicated to user interaction (e.g., writing scripts). The compute nodes have more memory and are dedicated to computation. A node is made up of multiple processors.
+
+The ```--mem``` option specifies the number of memory you will use in the node (e.g., ```--mem=32``` means you will use 32GB of memory)
+
+The ```-o``` option specifies the name of the standard output file (stdout). In this example, we use the job number (```%j```) and the first node (```%N```) as components of the filename (this is a good practice, but is not necessary). Anytime you use a command such as 'echo' that typically prints something to your terminal screen, it will be appended to this file.
+
+The ```-e``` option specifies the name of the error file. In this example, we use the job number (```%j```) and the first node (```%N```) as components of the filename (this is a good practice, but is not necessary). If your script runs into errors, the error messages will be printed to this file.
+
+The ```--ntasks``` (```-n```) option specifies the number of parallelized tasks you will utilize.
+> When running a command in parallel, the SLURM built in ```$SLURM_NTASKS``` variable can then be used to denote the number of MPI tasks to run. In case of a plain MPI job, this number should equal number of nodes (```$SLURM_NNODES```) times number of cores per node.
 
 
 Once you have completed the worksheet, add, commit, and push the worksheet and the logfile to your forked repository.
@@ -132,3 +183,17 @@ add worksheet.md logfile
 git commit -m "ran script and answered worksheet questions"
 git push
 ```
+
+# <a name="submitting-a-job"></a>
+## Submitting a Job
+
+Rather than running your script locally, you're now ready to submit the script as a batch to the slurm queue. Submit the script using the following command:
+
+```
+sbatch q.SlurmNewbie.sh
+```
+
+It may take some time to run if the queue is long. Check back periodically for the output files. 
+
+
+
