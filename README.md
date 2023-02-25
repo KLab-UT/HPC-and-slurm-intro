@@ -1,6 +1,6 @@
 # HPC-and-slurm-intro
-Orientation to high performance computing and slurm batch scheduling on the CHPC (Univ
-ersity of Utah) advanced bioinformatics course at Utah Tech University
+Orientation to high performance computing and slurm batch scheduling on the CHPC (University of Utah) advanced bioinformatics course at Utah Tech University
+
 
 ---
 
@@ -8,7 +8,8 @@ ersity of Utah) advanced bioinformatics course at Utah Tech University
 
 -   [Objectives](#objectives)
 -   [Getting Set Up](#getting-set-up)
--   [Exercise](#exercise)
+-   [Logging on](#logging-on)
+-   [Creating a Batch Script](#creating-a-batch-script)
 
 ---
 
@@ -22,7 +23,7 @@ ersity of Utah) advanced bioinformatics course at Utah Tech University
 
 # <a name="getting-set-up"></a>
 # Getting set up
-If you are here as a UTU student taking BIOL 3300, you should do the following:
+If you are here as a UTU student taking BIOL 4300, you should do the following:
 
 1.  Login to your [Github](https://github.com/) account.
 
@@ -63,8 +64,10 @@ Before using this guide, you should have completed the following:
 2. Used the class token to be added to the CHPC class group
 > note: if you are using the CHPC for research outside of the class, you don't need to use a token. Instead, a CHPC profile will be created for the K-Lab UTU group.
 
+---
+
 # <a name="logging-on"></a>
-## Logging on 
+## Logging On 
 'ssh' stands for 'secure shell'. By using ssh, you establish a secure connection between you and a remote computer
 
 To use ssh for logging into the CHPC, do the following:
