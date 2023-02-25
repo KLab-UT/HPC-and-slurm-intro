@@ -75,7 +75,55 @@ ssh <your-UNID>@lonepeak.chpc.utah.edu
 
 - 'your-UNID' is the ID number you obtained from the University of Utah
 - you will use the number that begins with a 'u'
+- This should prompt you to insert your password. Your password is the same as your UNID password.
 - if it is your first time logging on, you will have to answer 'yes' to a security question
+
+This will take you to your personal directory on the login node for the cluster. Look at your location using the following command:
+
+```pwd```
+
+You'll see that you are within a directory named after your UNID. This is your home directory on the login node. Any time you use the ```~``` symbol in a path, you'll see that it is referring to your home directory.
+
+
+Try this out by moving to the root directory and then move back to your home directory:
+
+```
+cd /
+pwd
+cd ~
+pwd
+```
+
+IMPORTANT NOTE: You should only read/create/edit files within your home directory. You shouldn't have access to anything else, but just-in-case I felt I should mention this here.
+
+Within your home directory you can create your own environment with directories and script files. Create a directory within your home directory called ```BIOL_4310```
+
+```mkdir -p ~/LonePeakLearner```
+
+Now the directory ```LonePeakLearner``` is within your home directory. Check it out (make sure you are in your home directory when you do this)
+
+```ls```
+
+Now create a bash script within the 'LonePeakLearner' directory that writes the text 'Hello World' to a text file called 'output.txt' (you can do this using a linux terminal text editor [such as vim] or you can use cat to create it with one line)
+
+```
+cd ~/LonePeakLearner
+echo 'echo "hello world\n" >> output.txt' > LonePeakLearner.sh
+```
+
+You can then run this script as you would on your local computer, but you are doing it on the cluster!
+
+```
+bash LonePeakLearner.sh
+```
+
+IMPORTANT NOTE: You should never run demanding commands from the login node, regardless of the directory you are in. The login node is for editing files, submitting jobs, and analyzing output. Very inexpensive computation is okay (e.g., installing software packages is usually okay), but be careful. If you notice a job is taking a long time to run, you should kill it. Any computation that requires lots of time/power should be conducted on the compute nodes- not the login nodes.
+
+The CHPC has multiple clusters for high performance computing. These can all be seen on the [CHPC website](https://chpc.utah.edu/documentation/gettingstarted.php) in the "Accessing the HPC Systems" section. If you ever have questions about using the CHPC, use the link above for accessing the CHPC documentation. We only have access to the general clusters (not the protected environment), but you can log into any of these using your UNID.
+
+
+
+
 
 
 Once you have completed the worksheet, add, commit, and push the worksheet and the logfile to your forked repository.
