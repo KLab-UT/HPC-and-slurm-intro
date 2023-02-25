@@ -8,8 +8,9 @@ Orientation to high performance computing and slurm batch scheduling on the CHPC
 
 -   [Objectives](#objectives)
 -   [Getting Set Up](#getting-set-up)
--   [Logging on](#logging-on)
+-   [Logging On](#logging-on)
 -   [Creating a Batch Script](#creating-a-batch-script)
+-   [Submitting a Job](#submitting-a-job)
 
 ---
 
@@ -101,23 +102,23 @@ IMPORTANT NOTE: You should only read/create/edit files within your home director
 
 Within your home directory you can create your own environment with directories and script files. Create a directory within your home directory called ```BIOL_4310```
 
-```mkdir -p ~/LonePeakLearner```
+```mkdir -p ~/BIOL_4310```
 
-Now the directory ```LonePeakLearner``` is within your home directory. Check it out (make sure you are in your home directory when you do this)
+Now the directory ```BIOL_4310``` is within your home directory. Check it out (make sure you are in your home directory when you do this)
 
 ```ls```
 
-Now create a bash script within the 'LonePeakLearner' directory that writes the text 'Hello World' to a text file called 'output.txt' (you can do this using a linux terminal text editor [such as vim] or you can use cat to create it with one line)
+Now create a bash script within the 'BIOL_4310' directory that writes the text 'Hello World' to a text file called 'output.txt' (you can do this using a linux terminal text editor [such as vim] or you can use cat to create it with one line)
 
 ```
-cd ~/LonePeakLearner
-echo 'echo "hello world\n" >> output.txt' > LonePeakLearner.sh
+cd ~/BIOL_4310
+echo 'echo "hello world\n" >> output.txt' > BIOL_4310.sh
 ```
 
 You can then run this script as you would on your local computer, but you are doing it on the cluster!
 
 ```
-bash LonePeakLearner.sh
+bash BIOL_4310.sh
 ```
 
 IMPORTANT NOTE: You should never run demanding commands from the login node, regardless of the directory you are in. The login node is for editing files, submitting jobs, and analyzing output. Very inexpensive computation is okay (e.g., installing software packages is usually okay), but be careful. If you notice a job is taking a long time to run, you should kill it. Any computation that requires lots of time/power should be conducted on the compute nodes- not the login nodes.
@@ -132,13 +133,13 @@ As stated above, when you login to a CHPC cluster, you land at the login node fo
 
 Slurm is a workload manager used for job submission on HPC clusters so that multiple people can access compute nodes for their high-intensity computing needs.
 
-Move to the ```LonePeakLearner``` directory you created earlier
+Move to the ```BIOL_4310``` directory you created earlier
 
 ```
 cd ~/BIOL_4310
 ```
 
-You should have a bash script here called 'LonePeakLearner.sh' that appends 'hello world\n' to a an output file. You can run this script on a compute node by converting your simple script to a batch script as described below (For more detailed instructions, see the [CHPC doc page](https://chpc.utah.edu/documentation/software/slurm.php#submit)
+You should have a bash script here called 'BIOL_4310.sh' that appends 'hello world\n' to a an output file. You can run this script on a compute node by converting your simple script to a batch script as described below (For more detailed instructions, see the [CHPC doc page](https://chpc.utah.edu/documentation/software/slurm.php#submit)
 
 To make your batch script, create a new bash script called ```q.SlurmNewbie.sh``` and add the following lines to the top of the file:
 
@@ -152,8 +153,8 @@ To make your batch script, create a new bash script called ```q.SlurmNewbie.sh``
 #SBATCH -o slurm-%j.out-%N
 #SBATCH -e slurm-%j.err-%N
 
-cd ~/LonePeakLearner
-bash LonePeakLearner.sh
+cd ~/BIOL_4310
+bash BIOL_4310.sh
 ```
 
 Every line that begins with ```#SBATCH``` is an option that will be interpreted by slurm. Any line that starts with ```#``` and is not imediately followed with ```BATCH``` will simply be interpreted as a comment.
